@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceuil{% endblock %}
+
+{% block body %}
+    <div class="col-sm-4 container col-12 mt-1" style="position: absolute; right: 75px">
+        {{ include('includes/sidebar.html.twig',{'latests':latests}) }}
+    </div>
+    <div class="col-sm-7 mt-4 mx-4">
+        {% for post in posts %}
+        <div class="row post mb-1">
+            <div class="col-12">
+                <h2 class="text-capitalize">{{ post.title }}</h2>
+                <p class="added"><a href="{{ path('user_posts',{'username':post.user.username}) }}" class="username">{{ post.user.fullname }}</a>{{ post.time|date("F jS \\a\\t g:ia") }}</p>
+                <p>{{ post.body }}</p>
+                <a href="{{ path('blog_show',{'slug':post.slug}) }}" class="btn btn-default float-left text-capitalize">Lire la suite</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="row post">
+    <div class="col-12">
+        <h2 class="text-capitalize">Articles Récents</h2>
+        <hr>
+        <div class="row post mb-1">
+            {% for post in latests %}
+                <div class="col-12">
+                    <h4 class="latest"><a href="{{ path('blog_show',{'slug':post.slug}) }}" class="username">{{ post.title }}</a></h4>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

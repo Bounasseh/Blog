@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <div class="col-sm-8 post mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Connexion</h4>
+                <hr>
+                <form action="{{ path('security_login') }}" method="post">
+                    <div class="form-group">
+                        <label for="username">Pseudo*</label>
+                        <input type="text" name="_username" id="_username" required placeholder="Pseudo" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="password">Mot de passe*</label>
+                        <input type="password" name="_password" id="_password" required placeholder="Mot de passe" class="form-control">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="login" name="login">Valider</button>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+    <div class="col-sm-4 container col-12 mt-1" style="position: absolute; right: 75px">
+        {{ include('includes/sidebar.html.twig',{'latests':latests}) }}
+    </div>
+    <div class="col-sm-7 mt-4 mx-4">
+            <div class="row post mb-1">
+                <div class="col-12">
+                    <h2 class="text-capitalize">{{ post.title }}</h2>
+                    <p class="added"><a href="" class="username">Hamza</a>{{ post.time|date("F jS \\a\\t g:ia") }}</p>
+                    <p>{{ post.body }}</p>
+                </div>
+            </div>
+            <div class="row post mb-1">
+                <div class="col-12">
+                    <h2 class="text-capitalize">Commentaires <span class="badge badge-dark">{{ post.getComments.count }}</span></h2>
+                    <hr>
+                    {% if is_granted('ROLE_USER') %}
+                        <form action="{{ path('comment_add')}}" method="post">
+                            <div class="form-group">
+                                <textarea name="_body" id="body" placeholder="Ajouter un commentaire" cols="30" rows="10" class = "form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            </div>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <input type="hidden" name="post_id" value="{{ post.id }}">
+                        </form>
+                    {% else %}
+                        <a href="{{ path('security_login') }}">Connectez vous pour commenter</a>
+                    {% endif %}
+                    <hr>
+                    <!-- show comments -->
+                    {% for comment in post.getComments %}
+                        <div class="media mt-3">
+                            <div class="media-body">
+                                <p>
+                                    <span class="comment-username">
+                                        {{ comment.user.username }}
+                                        {{ comment.created | date("F jS \\àg:ia") }}
+                                        <p class="comment">{{ comment.body }}</p>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+    </div>
+{% endblock %}
